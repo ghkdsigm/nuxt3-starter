@@ -1,7 +1,17 @@
+import { defineNuxtConfig } from 'nuxt/config';
+import { resolve } from 'path';
+
 export default defineNuxtConfig({
   devtools: { enabled: false },
   components: ['~/components', '~/components/layouts'],
   css: ['~/stylesheets/main.scss'],
+  alias: {
+    '@': resolve(__dirname, './'),
+    '@components': resolve(__dirname, './components'),
+    '@composables': resolve(__dirname, './composables'),
+    '@stores': resolve(__dirname, './stores'),
+    '@utils': resolve(__dirname, './utils'),
+  },
   modules: [
     '@nuxtjs/tailwindcss',
     '@nuxtjs/eslint-module',
@@ -22,5 +32,10 @@ export default defineNuxtConfig({
   devServer: {
     port: 4000,
     host: '0.0.0.0',
+  },
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_BASE_URL || 'http://localhost:4000/api',
+    },
   },
 });

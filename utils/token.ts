@@ -1,9 +1,11 @@
+type TokenType = 'accessToken' | 'refreshToken';
+
 export const useToken = () => {
-  const key = 'auth_token';
-
-  const get = () => (process.client ? localStorage.getItem(key) : null);
-  const set = (token: string) => localStorage.setItem(key, token);
-  const clear = () => localStorage.removeItem(key);
-
+  const get = (type: TokenType) => (process.client ? localStorage.getItem(type) : null);
+  const set = (type: TokenType, value: string) => localStorage.setItem(type, value);
+  const clear = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  };
   return { get, set, clear };
 };
