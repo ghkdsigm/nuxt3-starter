@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     '@utils': resolve(__dirname, './utils'),
   },
   modules: [
+    '@nuxtjs/i18n',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/eslint-module',
     '@nuxtjs/google-fonts',
@@ -20,6 +21,26 @@ export default defineNuxtConfig({
     'nuxt-icon',
     '@pinia/nuxt',
   ],
+  i18n: {
+    defaultLocale: 'ko',
+    locales: [
+      {
+        code: 'ko',
+        iso: 'ko-KR',
+        file: 'ko.json',
+        name: '한국어',
+      },
+      {
+        code: 'en',
+        iso: 'en-US',
+        file: 'en.json',
+        name: 'English',
+      },
+    ],
+    lazy: true,
+    langDir: 'locales/',
+    strategy: 'no_prefix', // or 'prefix_except_default'
+  },
   googleFonts: {
     download: true,
     display: 'swap',

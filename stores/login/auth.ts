@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', () => {
       const apiDispatcher = useApiDispatcher();
       const res = await apiDispatcher.dispatch({
         method: 'post',
-        path: 'auth/login',
+        path: 'login',
         params: { username, password },
       });
 
