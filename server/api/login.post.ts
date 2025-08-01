@@ -1,17 +1,24 @@
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const { username, password } = body;
 
-  if (username === 'admin' && password === '1234') {
-    return {
-      token: 'mock-jwt-token-123456',
-      user: {
-        id: 1,
-        name: '관리자',
-        username: 'admin',
-      },
-    };
+  const user = await prisma.user.findUnique({
+    where: { username },
+  });
+
+  if (!user || user.password !== password) {
+    return sendError(event, createError({ statusCode: 401, message: 'Unauthorized' }));
   }
 
-  return sendError(event, createError({ statusCode: 401, message: 'Unauthorized' }));
+  return {
+    token: 'mock-jwt-token',
+    user: {
+      id: user.id,
+      name: user.name,
+      username: user.username,
+    },
+  };
 });
